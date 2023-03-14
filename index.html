@@ -11,7 +11,7 @@
 
     <script>
       function setupSocket() {
-        const socket = new WebSocket('wss://198.135.149.78:3000');
+        const socket = new WebSocket('ws://198.135.149.78:3000');
         socket.onmessage = function(event) {
           const messages = document.getElementById('messages');
           const message = document.createElement('div');
