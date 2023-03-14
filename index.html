@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Test</title>
+  </head>
+  <body>
+    <h1>WebSocket Test</h1>
+    <textarea id="message" placeholder="Message"></textarea><br />
+    <button onclick="sendMessage()">Send Message</button><br />
+    <div id="messages"></div>
+
+    <script>
+      function setupSocket() {
+        const socket = new WebSocket('wss://198.135.149.78:3000');
+        socket.onmessage = function(event) {
+          const messages = document.getElementById('messages');
+          const message = document.createElement('div');
+          const data = event.data;
+          message.innerHTML = data;
+          messages.appendChild(message);
+        }
+        return socket;
+      }
+
+      let socket = null;
+
+      function sendMessage() {
+        if (!socket || socket.readyState !== WebSocket.OPEN) {
+          alert('WebSocket not open');
+          return;
+        }
+
+        const messageBox = document.getElementById('message');
+        const message = messageBox.value;
+        socket.send(message);
+        messageBox.value = '';
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        socket = setupSocket();
+      });
+    </script>
+  </body>
+</html>
